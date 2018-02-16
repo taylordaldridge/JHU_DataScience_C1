@@ -1,1 +1,1 @@
-# JHU_DataScience_C1
+# JHU_DataScience_RProg_C2
