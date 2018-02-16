@@ -1,0 +1,115 @@
+---
+title: "R Programming: Week 2 - Controlling Flows"
+output: pdf_document
+---
+#Objectives
+Write an if-else expression
+Write a for loop, a while loop, and a repeat loop
+Define a function in R and specify its return value [see Functions Part 1 and Part 2]
+Describe how R binds a value to a symbol via the search list
+Define what lexical scoping is with respect to how the value of free variables are resolved in R
+Describe the difference between lexical scoping and dynamic scoping rules. 
+Convert a character string representing a date/time into an R datetime object. [see Dates and Times]
+
+
+##If/Else
+If/Else tests conditions.
+
+Basics
+
+Example 1:
+```{r}
+x <- 4
+if(x > 3) { y <- 10} else y <- 0;
+y
+```
+
+Example 2:
+```{r}
+x=0
+y <- if(x > 3) {10
+} else {
+ 0
+}
+```
+
+Example 1 and 2 produce the same output.
+ 
+Can use just if/if statements
+
+
+## For Loops
+For loops execute a loop a fixed number of times.
+
+Example 1: Basic
+```{r}
+for(i in 1:10) {
+ print(i)
+};
+```
+
+Example 2: All do the same thing
+```{r}
+x <- c("a", "b", "c", "d")
+for(i in 1:4) {
+ print(x[i])
+}
+
+for(i in seq_along(x)) {
+ print(x[i])
+}
+
+for(letter in x) {
+ print(letter)
+}
+
+for(i in 1:4) print(x[i]);
+```
+
+##While Loops
+While Loops execute a loop while a condition is true
+
+Example 1: Basic While
+```{r}
+count <- 0
+while(count < 10) {
+ print(count)
+ count <- count + 1
+};
+```
+
+Example 2: Multiple Conditions
+```{r}
+z <- 5
+while(z >= 3 && z <= 10) { print(z) 
+  coin <- rbinom(1, 1, 0.5)
+ if(coin == 1) { ## random walk
+ z <- z + 1
+ } else {
+ z <- z - 1
+ }}
+```
+
+##Repeat, Next, and Break
+-Repeat executes an infinite loop
+  -Is not heavily used in R generally
+-Next skips an iteration of a loop
+-Break breaks the execution of a loop
+  - Used to exit a function
+
+Example 1: Next
+```{r}
+for(i in 1:100) {
+ if(i <= 20) {
+ ## Skip the first 20 iterations
+ next
+ }
+ ## Do something here
+};
+```
+
+Helpful hints
+-Avoid infinite loops
+-If working in commane line, use *apply functions.
+
+
