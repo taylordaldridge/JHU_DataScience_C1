@@ -1,0 +1,124 @@
+---
+title: 'Week 3: Loop Functions and Debugging'
+output: word_document
+---
+
+#Objectives
+- Define an anonymous function and describe its use in loop functions 
+- Describe how to start the R debugger for an arbitrary R function
+- Describe what the traceback() function does and what is the function(stack)
+
+##Loop Functions
+lapply - Loop over a list and evaluate a function on each element
+        split is helpful with lappy
+sapply - Same as lappy but try to simplify the result
+apply - apply a function over the margins of an array
+tapply - apply a function over subsets of a vector (table apply)
+mapply - multivariate version of lappy
+
+
+###lapply
+Takes three arguments 
+        1. List x
+        2. function 
+        3. other arguments
+Want to apply a function to every part of a list. 
+ALWAYS RETURNS A LIST
+
+Example 1: lapply
+```{r}
+x <- list (a = 1:5, b = rnorm(10))
+lapply(x, mean)
+```
+
+Example 2: lapply
+```{r}
+x <- list(a = 1:4, b = rnorm(10), c = rnorm(20,1), d = rnorm(100,5))
+lapply(x,mean)
+```
+
+Example 3: lapply
+```{r}
+x <- 1:4
+lapply(x, runif) 
+#runif generates random numbers of same vector length
+```
+
+Example 4: lapply matrices
+```{r}
+x <- list(a = matrix(1:4, 2,2), b = matrix(1:6, 3,2))
+x
+lapply(x , function(elt) elt[,1])
+```
+
+Example 5: sapply
+```{r}
+x <- list(a = 1:4, b = rnorm(10), c = rnorm(20,1), d = rnorm(100,5))
+sapply(x,mean)
+```
+- If the result is a list where very element is length 1, then a vector is 
+returned.
+- If the result is a list where every element is a vector of the same
+length (>1), a matrix is returned.
+- If it can't figure things out, a list is returned.
+
+Example 6: apply
+```{r}
+x <- matrix(rnorm(200), 20,10)
+apply(x, 2, mean)
+apply(x, 1, sum)
+```
+- It is most often apply to a function to the rows or columns of a matrix.
+- It can be used with general arrays.
+- No faster than writing a loop, but only takes one line.
+
+Col/Row Sums and Means
+- rowSums = apply(x, 1, sum) rowsum(x, dim = 2)
+- rowMeans = apply(x, 1, mean)
+- colSums = apply(x, 2, sum)
+- colMeans = apply(x, 2, mean)
+MUCH FASTER THAN apply ^
+
+Example 7: apply - quantiles
+```{r}
+x <- matrix(rnorm(200), 20,10)
+apply(x, 1, quantile, probs = c(0.25,0.75))
+```
+
+Example 8: mapply
+```{r}
+mapply(rep, 1:4, 4:1)
+```
+
+Example 9: tapply - take group means
+```{r}
+x <- c(rnorm(10), runif(10), rnorm(10,1))
+f <- gl(3,10)
+tapply(x,f,mean)
+tapply(x,f,range) 
+```
+
+Example 10: split 
+```{r}
+x <- c(rnorm(10), runif(10), rnorm(10,1))
+f <- gl(3,10)
+split(x,f)
+lapply(split(x,f),mean)
+```
+
+Example 11: split a data frame/ split by month
+```{r}
+library(datasets)
+head(airquality)
+s <- split(airquality, airquality$Month)
+lapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R","Wind")]))
+lapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R","Wind")], na.rm = TRUE))
+```
+
+##Debug
+printmessage()
+traceback()
+debug()
+browser()
+trace()
+recover()
