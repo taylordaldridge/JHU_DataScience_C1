@@ -34,7 +34,7 @@ cacheSolve <- function(x, ...) {
 }
 
 ##Test: call function, compute inverse, and retrieve inverse
-## from the cache list, compute inverse on that, and return original function.
+##from the cache list, compute inverse on that, and return original function.
 testMatrix <- matrix(c(2,4,6,8),2,2)
 testMatrixInv <- makeCacheMatrix(testMatrix)
 testMatrixInv
