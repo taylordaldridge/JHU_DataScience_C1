@@ -1,0 +1,103 @@
+---
+title: 'Week 3: Simulation and Profiling'
+output: word_document
+---
+##Objectives
+###Call the str function on an arbitrary R object
+##Describe the difference between the "by.self" and "by.total" output produced by the R profiler
+###Simulate a random normal variable with an arbitrary mean and standard deviation
+###Simulate data from a normal linear model
+
+#Str
+- Compactly display the internal structure of an R object
+- Alternative to summary
+- str means structure
+- nice for lists
+
+Example 1: str
+```{r}
+str(str)
+str(lm)
+```
+
+Example 2: str 
+```{r}
+x <- rnorm(100,2,4)
+summary(x)
+str(x)
+f<- gl(40,10)
+str(f)
+```
+
+Example 3: str with data set
+```{r}
+library(datasets)
+head(airquality)
+str(airquality)
+
+s <- split(airquality, airquality$Month)
+str(s)
+```
+
+
+#Generating Random Numbers
+Function for probability distributions 
+- rnorm: generate random Normal variates with a given mean and standard dev
+- dnorm: evaluate the Normal probability density with
+a given mean/sd at a point or vector of points
+- pnorm: evaluate the cumulative distribution function
+for a Normal distribution
+- rpois: generate random Poisson variates with a given 
+rate
+
+Functions prefixes
+- d: density
+- r: random number generation
+- p: cumulative distribution
+- q: quantile function
+
+Example 4: Generating Random Numbers
+```{r}
+x <- rnorm(10)
+x
+x <- rnorm(10,20,2) #(n, mean, sd)
+x
+summary(x)
+```
+
+##Need to set.seed for ensure reproducibility
+
+#Simulation of a linear model
+y = $\beta_{o}$ + $\beta_{1}x$ + $\epsilon$
+
+Example 5: Linear Model
+```{r}
+set.seed(20)
+x <- rnorm(100)
+e <- rnorm(100,0, 2)
+y <- 0.5 + 2 *x + e
+summary(y)
+plot(x,y)
+```
+
+#Simulation - Random Sampling
+
+Example 6: Random Sampling
+```{r}
+set.seed(1)
+sample(1:10,4)
+sample(letters,5)
+sample(1:10) #permutation
+sample(1:10 , replace = TRUE)
+```
+
+#R Profile
+-Systematic way to examine how much time is spent in different parts of a program.
+-Useful for optimization
+
+Helpful codes:
+-system.time()
+-Rprof <- don't use with system.time()
+-summaryRprof()
+        - by.total: divides time spent in each function by the total run time
+        - by.self: does the same but first subtracts out time spent in functions above in the call stack
